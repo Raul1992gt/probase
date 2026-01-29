@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -10,6 +10,39 @@ interface LayoutShellProps {
 
 export function LayoutShell({ children }: LayoutShellProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any | null>(null);
+  const [canInstall, setCanInstall] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleBeforeInstallPrompt = (event: Event) => {
+      event.preventDefault();
+      setDeferredPrompt(event as any);
+      setCanInstall(true);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt,
+      );
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+
+    await (deferredPrompt as any).prompt();
+    const choiceResult = await (deferredPrompt as any).userChoice;
+
+    if (choiceResult.outcome === "accepted") {
+      setCanInstall(false);
+    }
+    setDeferredPrompt(null);
+  };
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -45,6 +78,18 @@ export function LayoutShell({ children }: LayoutShellProps) {
         {menuOpen && (
           <div className="absolute inset-x-0 top-full border-t border-slate-200 bg-white/95 shadow-sm">
             <div className="mx-auto flex max-w-4xl flex-col items-end px-4 py-2 text-right text-sm font-semibold text-slate-700">
+              {canInstall && (
+                <button
+                  type="button"
+                  className="py-1.5 text-slate-900"
+                  onClick={() => {
+                    handleInstallClick();
+                    setMenuOpen(false);
+                  }}
+                >
+                  Instalar app
+                </button>
+              )}
               <Link
                 href="/home"
                 className="py-1.5"

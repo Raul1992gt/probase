@@ -51,7 +51,7 @@ export default function LevelSelectionPage() {
           </button>
         </section>
 
-        <section className="relative mt-auto h-40 overflow-hidden rounded-3xl bg-gradient-to-tr from-sky-100 via-sky-50 to-white">
+        <section className="relative mt-10 h-40 overflow-hidden rounded-3xl bg-gradient-to-tr from-sky-100 via-sky-50 to-white">
           <div className="absolute inset-x-0 bottom-0 h-5 bg-[#2B70D8]" />
           <div className="absolute left-4 top-4 max-w-[70%] text-sm text-slate-700">
             <p className="font-bold">¿Qué obtendrás con esta app?</p>
