@@ -1,6 +1,6 @@
 import type { LevelId } from "@/domain/models/level";
 
-export type TipCategory = "tecnico" | "lesiones" | "estrategia";
+export type TipCategory = "tecnico" | "lesiones" | "estrategia" | "mental";
 
 export interface Tip {
   id: string;

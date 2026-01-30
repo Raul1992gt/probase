@@ -1,7 +1,10 @@
 type AnalyticsEvent =
   | "level_selected"
   | "tip_viewed"
-  | "product_clicked";
+  | "product_clicked"
+  | "app_install_clicked"
+  | "products_menu_clicked"
+  | "recommended_product_clicked";
 
 interface AnalyticsPayload {
   [key: string]: unknown;

@@ -2,34 +2,43 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { LayoutShell } from "@/ui/components/LayoutShell";
 import { Card } from "@/ui/components/Card";
 import { Button } from "@/ui/components/Button";
+import { trackEvent } from "@/infrastructure/analytics/analyticsClient";
 import { useUserPreferences } from "@/ui/hooks/useUserPreferences";
 import { LEVELS } from "@/domain/models/level";
-import { getTipsByLevel } from "@/infrastructure/repositories/mockTipsRepository";
+import { getTipsByLevelPaginated } from "@/infrastructure/repositories/mockTipsRepository";
 import { getProductsByLevel } from "@/infrastructure/repositories/mockProductsRepository";
 
 export default function HomePage() {
   const { levelId, isLoaded } = useUserPreferences();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   if (isLoaded && !levelId) {
     router.push("/");
   }
 
-  const tips = getTipsByLevel(levelId ?? null);
   const products = getProductsByLevel(levelId ?? null);
   const featuredProducts = products.slice(0, 2);
   const activeLevel = LEVELS.find((l) => l.id === levelId) ?? LEVELS[0];
   const PAGE_SIZE = 3;
-  const [tipsPageStart, setTipsPageStart] = useState(0);
-  const hasTips = tips.length > 0;
-  const visibleTips = hasTips
-    ? tips.slice(tipsPageStart, tipsPageStart + PAGE_SIZE)
-    : [];
+  const initialTipsPage = Number(searchParams.get("tipsPage") ?? "0");
+  const [tipsPage, setTipsPage] = useState(
+    Number.isNaN(initialTipsPage) || initialTipsPage < 0
+      ? 0
+      : initialTipsPage,
+  );
+  const paginatedTips = getTipsByLevelPaginated(levelId ?? null, tipsPage + 1, PAGE_SIZE);
+  const hasTips = paginatedTips.total > 0;
+  const visibleTips = hasTips ? paginatedTips.items : [];
+
+  const handleClickRecommendedProduct = (id: string) => {
+    trackEvent("recommended_product_clicked", { productId: id, location: "home_recommended" });
+  };
 
   return (
     <LayoutShell>
@@ -68,7 +77,9 @@ export default function HomePage() {
                     <p className="text-sm text-slate-700">{tip.shortDescription}</p>
                     <button
                       type="button"
-                      onClick={() => router.push(`/tips/${tip.id}`)}
+                      onClick={() =>
+                        router.push(`/tips/${tip.id}?tipsPage=${tipsPage}`)
+                      }
                       className="self-start text-xs font-semibold text-[#2B70D8] hover:underline"
                     >
                       Leer más
@@ -76,20 +87,26 @@ export default function HomePage() {
                   </div>
                 </Card>
               ))}
-              {tips.length > PAGE_SIZE && (
-                <Button
-                  variant="secondary"
-                  className="mt-1 w-full bg-[#2B70D8] hover:bg-[#235ab0]"
-                  onClick={() =>
-                    setTipsPageStart((prev) => {
-                      if (!tips.length) return prev;
-                      const next = prev + PAGE_SIZE;
-                      return next >= tips.length ? 0 : next;
-                    })
-                  }
-                >
-                  Siguientes tips →
-                </Button>
+              {paginatedTips.totalPages > 1 && (
+                <div className="mt-1 flex flex-col gap-1">
+                  <p className="text-center text-[11px] text-slate-500">
+                    Página {tipsPage + 1} de {paginatedTips.totalPages}
+                  </p>
+                  <Button
+                    variant="secondary"
+                    className="w-full bg-[#2B70D8] hover:bg-[#235ab0]"
+                    onClick={() => {
+                      if (!paginatedTips.totalPages) return;
+                      const next = tipsPage + 1;
+                      const newPage =
+                        next >= paginatedTips.totalPages ? 0 : next;
+                      setTipsPage(newPage);
+                      router.push(`?tipsPage=${newPage}`);
+                    }}
+                  >
+                    Siguientes tips →
+                  </Button>
+                </div>
               )}
             </div>
           ) : (
@@ -108,7 +125,11 @@ export default function HomePage() {
           Recomendados para tu nivel
         </p>
         {featuredProducts.map((product) => (
-          <Link href="/products" key={product.id}>
+          <Link
+            href="/products"
+            key={product.id}
+            onClick={() => handleClickRecommendedProduct(product.id)}
+          >
             <Card className="flex items-center gap-3 bg-white">
               <div className="relative h-16 w-16 overflow-hidden rounded-xl bg-slate-100">
                 <Image
