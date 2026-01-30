@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { LayoutShell } from "@/ui/components/LayoutShell";
 import { Card } from "@/ui/components/Card";
@@ -16,7 +16,6 @@ import { getProductsByLevel } from "@/infrastructure/repositories/mockProductsRe
 export default function HomePage() {
   const { levelId, isLoaded } = useUserPreferences();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   if (isLoaded && !levelId) {
     router.push("/");
@@ -26,12 +25,14 @@ export default function HomePage() {
   const featuredProducts = products.slice(0, 2);
   const activeLevel = LEVELS.find((l) => l.id === levelId) ?? LEVELS[0];
   const PAGE_SIZE = 3;
-  const initialTipsPage = Number(searchParams.get("tipsPage") ?? "0");
-  const [tipsPage, setTipsPage] = useState(
-    Number.isNaN(initialTipsPage) || initialTipsPage < 0
-      ? 0
-      : initialTipsPage,
-  );
+  const [tipsPage, setTipsPage] = useState(0);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const initialTipsPage = Number(params.get("tipsPage") ?? "0");
+    if (Number.isNaN(initialTipsPage) || initialTipsPage < 0) return;
+    setTipsPage(initialTipsPage);
+  }, []);
   const paginatedTips = getTipsByLevelPaginated(levelId ?? null, tipsPage + 1, PAGE_SIZE);
   const hasTips = paginatedTips.total > 0;
   const visibleTips = hasTips ? paginatedTips.items : [];
