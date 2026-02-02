@@ -71,7 +71,11 @@ export function LayoutShell({ children }: LayoutShellProps) {
     <div className="min-h-screen bg-slate-50">
       <header className="relative border-b border-slate-200 bg-white/70 backdrop-blur-sm">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
-          <Link href="/" className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
+          <Link
+            href="/?forceLevelSelection=1"
+            className="flex items-center gap-2"
+            onClick={() => setMenuOpen(false)}
+          >
             <Image
               src="/icon-512.png"
               alt="Consejos Pádel"
@@ -127,6 +131,13 @@ export function LayoutShell({ children }: LayoutShellProps) {
                   ¿Te mola la app? 👉 Instálala
                 </button>
               )}
+              <Link
+                href="/?forceLevelSelection=1"
+                className="py-1.5"
+                onClick={() => setMenuOpen(false)}
+              >
+                Cambiar nivel
+              </Link>
               {showIosInstallHint && (
                 <p className="py-1.5 text-[11px] font-medium text-emerald-700">
                   En iPhone: abre en Safari y usa "Compartir" → "Añadir a pantalla de inicio"
@@ -148,13 +159,6 @@ export function LayoutShell({ children }: LayoutShellProps) {
                 }}
               >
                 Productos
-              </Link>
-              <Link
-                href="/"
-                className="py-1.5"
-                onClick={() => setMenuOpen(false)}
-              >
-                Cambiar nivel
               </Link>
             </div>
           </div>

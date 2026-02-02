@@ -673,6 +673,160 @@ export const mockTips: Tip[] = [
     level: "beginner",
     tags: ["rutina", "saque"],
   },
+  {
+    id: "tip-beginner-serve-body",
+    title: "Saque al cuerpo para forzar restos incómodos",
+    shortDescription:
+      "Cuando dudes, sacar al cuerpo del restador es una opción muy segura.",
+    content:
+      "Apunta tu saque hacia la zona del pecho o cadera del rival para que tenga menos espacio para armar el golpe. No necesitas mucha potencia: prioriza botar alto y que la bola entre con margen al cuadro.",
+    category: "tecnico",
+    level: "beginner",
+    tags: ["saque", "seguridad"],
+  },
+  {
+    id: "tip-beginner-serve-rhythm",
+    title: "Mantén siempre el mismo ritmo de saque",
+    shortDescription:
+      "Un ritual constante de saque reduce dobles faltas en momentos de presión.",
+    content:
+      "Cuenta mentalmente un pequeño patrón (por ejemplo, 'respiro, boto, saco') y respétalo en todos tus saques. Evita acelerar el gesto cuando estés nervioso; cuanto más repitas la misma secuencia, más estable será tu porcentaje de primeros.",
+    category: "mental",
+    level: "beginner",
+    tags: ["saque", "rutina"],
+  },
+  {
+    id: "tip-beginner-physical-mobility",
+    title: "Trabaja movilidad básica de cadera y tobillos",
+    shortDescription:
+      "Una buena movilidad reduce lesiones y mejora tu alcance en la pista.",
+    content:
+      "Dedica 5 minutos, 2-3 veces por semana, a hacer círculos de cadera, sentadillas profundas asistidas y movilidad de tobillos contra la pared. Ganar rango de movimiento hará que llegar a bolas difíciles sea más cómodo y seguro.",
+    category: "lesiones",
+    level: "beginner",
+    tags: ["fisico", "movilidad"],
+  },
+  {
+    id: "tip-intermediate-serve-second",
+    title: "Construye una segunda bola de saque muy fiable",
+    shortDescription:
+      "Una segunda bola segura te permite arriesgar más con la primera.",
+    content:
+      "Entrena un segundo saque con más altura y efecto liftado, apuntando al centro del cuadro. Aunque el rival pueda atacar un poco más, reducirás drásticamente las dobles faltas en momentos clave del partido.",
+    category: "tecnico",
+    level: "intermediate",
+    tags: ["saque", "seguridad"],
+  },
+  {
+    id: "tip-intermediate-serve-to-weak",
+    title: "Saca más veces al jugador más débil",
+    shortDescription:
+      "Dirigir el saque al rival que falla más es una decisión táctica sencilla.",
+    content:
+      "Observa quién resta peor o comete más errores no forzados y concentra ahí la mayoría de tus saques. Sin cambiar nada técnico, estarás generando más puntos gratis a lo largo del partido.",
+    category: "estrategia",
+    level: "intermediate",
+    tags: ["saque", "tactica"],
+  },
+  {
+    id: "tip-intermediate-wall-lift",
+    title: "Usa bolas liftadas para que la pared trabaje a tu favor",
+    shortDescription:
+      "Un golpe con efecto liftado que bote cerca de la pared se vuelve muy incómodo.",
+    content:
+      "Desde el fondo, juega derechas y reveses con efecto liftado que boten profundo, cerca de la pared rival. El segundo bote se acelerará y obligará a tus oponentes a preparar el golpe muy pronto o a devolver bolas forzadas.",
+    category: "estrategia",
+    level: "intermediate",
+    tags: ["pared", "profundidad"],
+  },
+  {
+    id: "tip-intermediate-wall-position",
+    title: "Ajusta tu distancia a la pared según la velocidad de la bola",
+    shortDescription:
+      "Cuanto más fuerte venga la bola, más espacio necesitas con la pared.",
+    content:
+      "Si la bola viene muy rápida, da un paso hacia delante para que el rebote en la pared no te 'coma'. Si viene lenta, puedes pegarte un poco más para aprovechar mejor la altura de salida. Este ajuste fino mejora mucho tu control.",
+    category: "tecnico",
+    level: "intermediate",
+    tags: ["pared", "posicion"],
+  },
+  {
+    id: "tip-intermediate-physical-core",
+    title: "Refuerza tu core para golpes más estables",
+    shortDescription:
+      "Un core fuerte reduce sobrecarga en hombros y codos.",
+    content:
+      "Incluye planchas frontales y laterales 2-3 veces por semana, además de puentes de glúteo. Mantener el tronco estable al golpear permitirá que el brazo trabaje más libre y con menos riesgo de lesión.",
+    category: "lesiones",
+    level: "intermediate",
+    tags: ["fisico", "core"],
+  },
+  {
+    id: "tip-advanced-serve-body-backhand",
+    title: "Saque al revés del rival en momentos clave",
+    shortDescription:
+      "Ataca la zona de revés del restador para limitar sus opciones ofensivas.",
+    content:
+      "En bolas de break o puntos importantes, orienta tu saque hacia el revés del restador, combinando altura y efecto. La mayoría de jugadores se sienten menos cómodos restando de revés, lo que te dará bolas más blandas para la tercera.",
+    category: "estrategia",
+    level: "advanced",
+    tags: ["saque", "tactica"],
+  },
+  {
+    id: "tip-advanced-serve-to-berja",
+    title: "Saque al cristal y volea a la verja",
+    shortDescription:
+      "Un patrón agresivo para romper la dinámica del restador.",
+    content:
+      "Saca alto hacia el cristal lateral buscando que la bola se abra mucho. Si el resto queda corto o flotado, avanza y juega una volea tensa dirigida a la verja, aprovechando el ángulo para forzar el error.",
+    category: "estrategia",
+    level: "advanced",
+    tags: ["saque", "pared"],
+  },
+  {
+    id: "tip-advanced-wall-double",
+    title: "Lee los dobles rebotes pared-lateral + fondo",
+    shortDescription:
+      "En niveles altos, muchos globos y bolas defensivas usan dobles paredes.",
+    content:
+      "Entrena la lectura de bolas que tocan primero pared lateral y luego fondo (o al revés). Observa el ángulo de entrada y la altura para decidir si esperar más atrás o atacar de volea tras la salida.",
+    category: "tecnico",
+    level: "advanced",
+    tags: ["pared", "lectura"],
+  },
+  {
+    id: "tip-advanced-wall-drop-shot",
+    title: "Chiquita pegada a la pared para romper la red",
+    shortDescription:
+      "Una chiquita muy pegada a la pared obliga al rival a golpear incómodo.",
+    content:
+      "Desde el fondo, si los rivales están muy pegados a la red, ejecuta una chiquita baja y cercana a la pared lateral. El bote hará que la pelota se 'pegue' al cristal y dificulte mucho una volea agresiva.",
+    category: "estrategia",
+    level: "advanced",
+    tags: ["pared", "chiquita"],
+  },
+  {
+    id: "tip-advanced-mental-reset",
+    title: "Reset mental después de un juego muy malo",
+    shortDescription:
+      "Un solo juego no define el partido si sabes reiniciar tu cabeza.",
+    content:
+      "Cuando encadenes varios errores en un mismo juego, utiliza el cambio de lado para hacer 3 respiraciones profundas, definir una única prioridad táctica y recordar algún punto que hayas jugado bien. Esto evita arrastrar el mal juego al siguiente.",
+    category: "mental",
+    level: "advanced",
+    tags: ["mental", "reset"],
+  },
+  {
+    id: "tip-advanced-physical-load-management",
+    title: "Planifica semanas de descarga cada cierto tiempo",
+    shortDescription:
+      "Bajar el volumen de juego puntualmente te hace rendir más a largo plazo.",
+    content:
+      "Cada 6-8 semanas, reduce durante 5-7 días el número de partidos y la intensidad de entrenamientos. Aprovecha para trabajar movilidad y fuerza suave. Esta descarga programada disminuye el riesgo de sobrecarga crónica.",
+    category: "lesiones",
+    level: "advanced",
+    tags: ["fisico", "carga"],
+  },
 ];
 
 export function getTipsByLevel(levelId: string | null): Tip[] {

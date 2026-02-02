@@ -1,14 +1,28 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { LEVELS } from "@/domain/models/level";
 import { LayoutShell } from "@/ui/components/LayoutShell";
 import { useUserPreferences } from "@/ui/hooks/useUserPreferences";
 
 export default function LevelSelectionPage() {
-  const { setLevelId } = useUserPreferences();
+  const { levelId, setLevelId, isLoaded } = useUserPreferences();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    let forceLevelSelection = false;
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      forceLevelSelection = params.get("forceLevelSelection") === "1";
+    }
+
+    if (levelId && !forceLevelSelection) {
+      router.replace("/home");
+    }
+  }, [isLoaded, levelId, router]);
 
   const handleSelectLevel = (id: (typeof LEVELS)[number]["id"]) => {
     setLevelId(id);
