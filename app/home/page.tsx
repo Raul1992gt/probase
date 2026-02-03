@@ -31,9 +31,26 @@ export default function HomePage() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
+
     const initialTipsPage = Number(params.get("tipsPage") ?? "0");
-    if (Number.isNaN(initialTipsPage) || initialTipsPage < 0) return;
-    setTipsPage(initialTipsPage);
+    if (!Number.isNaN(initialTipsPage) && initialTipsPage >= 0) {
+      setTipsPage(initialTipsPage);
+    }
+
+    const initialType = params.get("type") ?? "all";
+    const allowedTypes = [
+      "all",
+      "tecnico",
+      "estrategia",
+      "lesiones",
+      "mental",
+      "fisico",
+      "saque",
+      "pared",
+    ];
+    if (allowedTypes.includes(initialType)) {
+      setSelectedType(initialType);
+    }
   }, []);
   const filterByType = (typeId: string) => {
     if (typeId === "all") return tips;
@@ -121,7 +138,10 @@ export default function HomePage() {
                     onClick={() => {
                       setSelectedType(typeId);
                       setTipsPage(0);
-                      router.push("?tipsPage=0");
+                      const params = new URLSearchParams(window.location.search);
+                      params.set("tipsPage", "0");
+                      params.set("type", typeId);
+                      router.push(`?${params.toString()}`);
                     }}
                     className={`rounded-full border px-3 py-1 transition ${
                       isActive
@@ -159,7 +179,9 @@ export default function HomePage() {
                     <button
                       type="button"
                       onClick={() =>
-                        router.push(`/tips/${tip.id}?tipsPage=${tipsPage}`)
+                        router.push(
+                          `/tips/${tip.id}?tipsPage=${tipsPage}&type=${selectedType}`,
+                        )
                       }
                       className="mt-1 inline-flex items-center gap-1 self-start rounded-full bg-[#2B70D8] px-3 py-1 text-[11px] font-semibold text-white shadow-sm hover:bg-[#235ab0]"
                     >
@@ -182,7 +204,10 @@ export default function HomePage() {
                       const next = tipsPage + 1;
                       const newPage = next >= totalPages ? 0 : next;
                       setTipsPage(newPage);
-                      router.push(`?tipsPage=${newPage}`);
+                      const params = new URLSearchParams(window.location.search);
+                      params.set("tipsPage", String(newPage));
+                      params.set("type", selectedType);
+                      router.push(`?${params.toString()}`);
                     }}
                   >
                     Siguientes tips →
